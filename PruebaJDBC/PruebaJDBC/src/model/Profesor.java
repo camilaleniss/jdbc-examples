@@ -5,18 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Matricula {
-	
-	private String createTableQuery = "CREATE TABLE MATRICULA(\r\n" + 
-			"    ESTUDIANTE varchar(12) NOT NULL,\r\n" + 
-			"    CURSO number(12) NOT NULL,\r\n" + 
-			"    FOREIGN KEY (ESTUDIANTE) REFERENCES ESTUDIANTE(COD_EST),\r\n" + 
-			"    FOREIGN KEY (CURSO) REFERENCES CURSO(COD_CURSO)\r\n" + 
+public class Profesor {
+
+	private String createTableQuery = "CREATE TABLE PROFESOR(" + 
+			"    COD_PROF number(12) NOT NULL," + 
+			"    NOMBRE varchar(50) NOT NULL," + 
+			"    DEPARTAMENTO number(3) NOT NULL, " + 
+			"    PRIMARY KEY (COD_PROF)" + 
 			")";
 	
-	private String dropTableQuery = "DROP TABLE MATRICULA";
+	private String dropTableQuery = "DROP TABLE PROFESOR";
 	
-	private String insertIntoTable = "INSERT INTO MATRICULA (ESTUDIANTE, CURSO) VALUES(?, ?)";
+	private String insertIntoTable = "INSERT INTO PROFESOR (COD_PROF, NOMBRE, DEPARTAMENTO) VALUES(?, ?, ?)";
 	
 	public String createTable(Connection connection) {
 		try {
@@ -24,10 +24,10 @@ public class Matricula {
 			stmt.executeUpdate(createTableQuery);
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return "Failed create table Matricula";
+			return "Failed create table Profesor";
 		}
 		
-		return "Successfully created table Matricula";
+		return "Successfully created table Profesor";
 		
 	}
 	
@@ -38,18 +38,19 @@ public class Matricula {
 			stmt.executeUpdate(dropTableQuery);
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return "Failed drop table Matricula";
+			return "Failed drop table Profesor";
 		}
 		
-		return "Successfully dropped table Matricula";
+		return "Successfully dropped table Profesor";
 	}
-			
-	public String insertIntoTable(Connection connection, String estudiante, int curso) {
+	
+	public String insertIntoTable(Connection connection, int cod_prof, String nombre, int departamento) {
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(insertIntoTable);
-			stmt.setString(1,estudiante);
-			stmt.setInt(2, curso);
+			stmt.setInt(1, cod_prof);
+			stmt.setString(2,nombre);
+			stmt.setInt(3, departamento);
 			stmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

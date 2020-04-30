@@ -1,7 +1,8 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -18,6 +19,8 @@ public class Estudiante {
 	
 	private String dropTableQuery = "DROP TABLE ESTUDIANTE";
 	
+	private String insertIntoTable = "INSERT INTO CURSO (COD_EST, NOMBRE, NOMBRE_PROGRAMA, PROMEDIO_ACUMULADO, FECHA_NACIMIENTO) VALUES(?, ?, ?, ?, ?)";
+	
 	public String createTable(Connection connection) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -27,7 +30,7 @@ public class Estudiante {
 			return "Failed create table Estudiante";
 		}
 		
-		return "Successful created table Estudiante";
+		return "Successfully created table Estudiante";
 		
 	}
 	
@@ -41,7 +44,24 @@ public class Estudiante {
 			return "Failed drop table Estudiante";
 		}
 		
-		return "Successful dropped table Estudiante";
+		return "Successfully dropped table Estudiante";
 	}
-			
+	
+	public String insertIntoTable(Connection connection, int cod_est, String nombre, String nombrePrograma, double promedioAcumulado, Date fechaNac) {
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(insertIntoTable);
+			stmt.setInt(1, cod_est);
+			stmt.setString(2, nombre);
+			stmt.setString(3, nombrePrograma);
+			stmt.setDouble(4, promedioAcumulado);
+			stmt.setDate(5, fechaNac);
+			stmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return "Failed to insert row";
+		}
+		return "Succesfully inserted one row";
+	}
+	
 }
