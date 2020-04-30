@@ -1,0 +1,35 @@
+import java.sql.SQLException;
+
+public class PruebaJDBC {
+
+	public static void registrarJDBC() {
+		System.out.println("-------- Prueba de Registro de Oracle JDBC ------");
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("¡Oracle JDBC Driver no encontrado!");
+			e.printStackTrace();
+			return;
+
+		}
+		
+		System.out.println("¡Oracle JDBC Driver Registrado!");
+	}
+	
+	public static void main(String[] args) {
+		registrarJDBC();
+		
+		ConexionOracle connection = new ConexionOracle();
+		
+		try {
+			connection.conectarConsultarBD();
+			} catch (SQLException e) {
+			System.out.println("Fallo al conectar! Ver consola de salida");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			}
+
+
+	}
+
+}

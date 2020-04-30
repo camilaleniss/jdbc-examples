@@ -1,0 +1,44 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Estudiante {
+	
+	private String createTableQuery = "CREATE TABLE ESTUDIANTE(\r\n" + 
+			"    COD_EST varchar(12) NOT NULL,\r\n" + 
+			"    NOMBRE varchar(50) NOT NULL,\r\n" + 
+			"    NOMBRE_PROGRAMA varchar(50) NOT NULL, \r\n" + 
+			"    PROMEDIO_ACUMULADO number(2,1),\r\n" + 
+			"    FECHA_NACIMIENTO DATE,\r\n" + 
+			"    PRIMARY KEY (COD_EST)\r\n" + 
+			");";
+	
+	private String dropTableQuery = "DROP TABLE ESTUDIANTE;";
+	
+	public String createTable(Connection connection) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate(createTableQuery);
+		}catch (SQLException e) {
+			return "Failed create table Estudiante";
+		}
+		
+		return "Successful created table Estudiante";
+		
+	}
+	
+	public String dropTable(Connection connection) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate(dropTableQuery);
+		}catch (SQLException e) {
+			return "Failed drop table Estudiante";
+		}
+		
+		return "Successful dropped table Estudiante";
+	}
+			
+}

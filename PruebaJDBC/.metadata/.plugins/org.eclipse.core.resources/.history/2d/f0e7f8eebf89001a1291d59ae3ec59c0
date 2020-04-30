@@ -1,0 +1,21 @@
+
+public class PruebaJDBC {
+
+	public static void main(String[] args) {
+		
+		System.out.println("-------- Prueba de Registro de Oracle JDBC ------");
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("¡Oracle JDBC Driver no encontrado!");
+			e.printStackTrace();
+			return;
+
+		}
+		
+		System.out.println("¡Oracle JDBC Driver Registrado!");
+
+
+	}
+
+}
