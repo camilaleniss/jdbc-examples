@@ -22,6 +22,7 @@ public class Matricula {
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(createTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed create table Matricula";
@@ -36,6 +37,7 @@ public class Matricula {
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(dropTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed drop table Matricula";
@@ -51,6 +53,7 @@ public class Matricula {
 			stmt.setString(1,estudiante);
 			stmt.setInt(2, curso);
 			stmt.executeUpdate();
+			stmt.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return "Failed to insert row";

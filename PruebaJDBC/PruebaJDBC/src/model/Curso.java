@@ -12,12 +12,12 @@ public class Curso {
 			"    NOMBRE varchar(50) NOT NULL," + 
 			"    HORARIO varchar(50) NOT NULL, " + 
 			"    SALON varchar(20) NOT NULL, " + 
-			"	 PROFESOR number(12) NOT NULL,"+
+			"	 PROFESOR varchar(10) NOT NULL,"+
 			"    PRIMARY KEY (COD_CURSO)," + 
 			"    FOREIGN KEY (PROFESOR) REFERENCES PROFESOR(COD_PROF)" + 
 			")";
 	
-	private String dropTableQuery = "DROP TABLE ESTUDIANTE";
+	private String dropTableQuery = "DROP TABLE CURSO";
 	
 	private String insertIntoTable = "INSERT INTO CURSO (COD_CURSO, NOMBRE, HORARIO, SALON, PROFESOR) VALUES(?, ?, ?, ?, ?)";
 	
@@ -25,6 +25,7 @@ public class Curso {
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(createTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed create table Curso";
@@ -39,6 +40,7 @@ public class Curso {
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(dropTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed drop table Curso";
@@ -48,7 +50,7 @@ public class Curso {
 	}
 	
 	
-	public String insertIntoTable(Connection connection, int cod_curso, String nombre, String horario, String salon, int profesor) {
+	public String insertIntoTable(Connection connection, int cod_curso, String nombre, String horario, String salon, String profesor) {
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(insertIntoTable);
@@ -56,8 +58,9 @@ public class Curso {
 			stmt.setString(2,nombre);
 			stmt.setString(3, horario);
 			stmt.setString(4, salon);
-			stmt.setInt(5, profesor);
+			stmt.setString(5, profesor);
 			stmt.executeUpdate();
+			stmt.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return "Failed to insert row";

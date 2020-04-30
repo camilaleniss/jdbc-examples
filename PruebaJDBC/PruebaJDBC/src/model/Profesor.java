@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class Profesor {
 
 	private String createTableQuery = "CREATE TABLE PROFESOR(" + 
-			"    COD_PROF number(12) NOT NULL," + 
+			"    COD_PROF varchar(10) NOT NULL," + 
 			"    NOMBRE varchar(50) NOT NULL," + 
 			"    DEPARTAMENTO number(3) NOT NULL, " + 
 			"    PRIMARY KEY (COD_PROF)" + 
@@ -22,6 +22,7 @@ public class Profesor {
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(createTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed create table Profesor";
@@ -36,6 +37,7 @@ public class Profesor {
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(dropTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed drop table Profesor";
@@ -44,14 +46,15 @@ public class Profesor {
 		return "Successfully dropped table Profesor";
 	}
 	
-	public String insertIntoTable(Connection connection, int cod_prof, String nombre, int departamento) {
+	public String insertIntoTable(Connection connection, String cod_prof, String nombre, int departamento) {
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(insertIntoTable);
-			stmt.setInt(1, cod_prof);
+			stmt.setString(1, cod_prof);
 			stmt.setString(2,nombre);
 			stmt.setInt(3, departamento);
 			stmt.executeUpdate();
+			stmt.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return "Failed to insert row";

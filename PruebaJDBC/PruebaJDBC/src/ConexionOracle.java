@@ -30,23 +30,4 @@ public class ConexionOracle {
 			return con;
 	}
 	
-	public void ExecuteStatement(Connection con) throws SQLException {
-		Statement stmt = con.createStatement();
-		
-		ResultSet rs = stmt.executeQuery(
-				"SELECT * FROM Estudiante");
-		
-		while (rs.next()) {
-			String Cod = rs.getString("COD_EST");
-			String Nombre = rs.getString("NOMBRE");
-			String Programa = rs.getString("NOMBRE_PROGRAMA");
-			double Promedio = rs.getDouble("PROMEDIO_ACUMULADO");
-			Date FechaNacimiento = rs.getDate("FECHA_NACIMIENTO");
-			System.out.println(Cod+","+Nombre+","+Programa+", "+
-			Promedio+", "+FechaNacimiento.toString());
-			}
-		
-		con.close();
-	}
-
 }

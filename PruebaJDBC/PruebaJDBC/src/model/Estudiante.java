@@ -19,12 +19,13 @@ public class Estudiante {
 	
 	private String dropTableQuery = "DROP TABLE ESTUDIANTE";
 	
-	private String insertIntoTable = "INSERT INTO CURSO (COD_EST, NOMBRE, NOMBRE_PROGRAMA, PROMEDIO_ACUMULADO, FECHA_NACIMIENTO) VALUES(?, ?, ?, ?, ?)";
+	private String insertIntoTable = "INSERT INTO ESTUDIANTE (COD_EST, NOMBRE, NOMBRE_PROGRAMA, PROMEDIO_ACUMULADO, FECHA_NACIMIENTO) VALUES(?, ?, ?, ?, ?)";
 	
 	public String createTable(Connection connection) {
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(createTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed create table Estudiante";
@@ -39,6 +40,7 @@ public class Estudiante {
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(dropTableQuery);
+			stmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return "Failed drop table Estudiante";
@@ -47,16 +49,17 @@ public class Estudiante {
 		return "Successfully dropped table Estudiante";
 	}
 	
-	public String insertIntoTable(Connection connection, int cod_est, String nombre, String nombrePrograma, double promedioAcumulado, Date fechaNac) {
+	public String insertIntoTable(Connection connection, String cod_est, String nombre, String nombrePrograma, double promedioAcumulado, Date fechaNac) {
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(insertIntoTable);
-			stmt.setInt(1, cod_est);
+			stmt.setString(1, cod_est);
 			stmt.setString(2, nombre);
 			stmt.setString(3, nombrePrograma);
 			stmt.setDouble(4, promedioAcumulado);
 			stmt.setDate(5, fechaNac);
 			stmt.executeUpdate();
+			stmt.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return "Failed to insert row";
